@@ -6,11 +6,40 @@ import { Constants } from './playwright/fixtures/constants/constants.ts';
 
 dotenv.config();
 
+const storageStatePath: string = Constants.DEFAULT_STORAGE_STATE_PATH;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getProjects(): any {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const projects: Record<string, any>[] = [
+    {
+      name: 'setup',
+      testDir: './playwright/helpers/auth',
+      testMatch: /.*\.setup\.ts/,
+    },
+    {
+      name: 'chromium',
+      testDir: './playwright/tests',
+      use: commonUse,
+    },
+  ];
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return projects.map((project: any) => {
+    if (project.name !== 'setup') {
+      project.dependencies = ['setup'];
+    }
+
+    return project;
+  });
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const commonUse: any = {
   ...devices['Desktop Chrome'],
   channel: 'chrome',
   locale: 'en_US',
+  storageState: storageStatePath,
   timezoneId: 'Atlantic/Reykjavik',
   viewport: { width: 1920, height: 1080 },
 };
@@ -38,26 +67,5 @@ export default defineConfig({
   expect: { timeout: Constants.FORTY_SECONDS },
   timeout: Constants.FIVE_MINUTES,
   /* Configure projects for major browsers */
-  projects: [
-    {
-      name: 'chromium',
-      use: commonUse,
-    },
-    // {
-    //   name: 'firefox',
-    //   use: {
-    //     ...commonUse,
-    //     ...devices['Desktop Firefox'],
-    //     channel: 'firefox',
-    //   },
-    // },
-    // {
-    //   name: 'webkit',
-    //   use: {
-    //     ...commonUse,
-    //     ...devices['Desktop Safari'],
-    //     channel: 'webkit',
-    //   },
-    // },
-  ],
+  projects: getProjects(),
 });
