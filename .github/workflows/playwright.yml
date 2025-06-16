@@ -38,10 +38,3 @@ jobs:
       - name: Run Playwright tests via Currents
         continue-on-error: true
         run: npx pwc --key ${{ secrets.CURRENTS_API_KEY }} --project-id 3dTN9P
-
-      - name: Upload test report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report
-          path: playwright-report

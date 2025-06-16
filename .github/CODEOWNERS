@@ -1,0 +1,10 @@
+/.github/CODEOWNERS @oleksandr-konovalov
+
+/.github/ @oleksandr-konovalov
+/config/ @oleksandr-konovalov
+package.json @oleksandr-konovalov
+playwright.config.ts @oleksandr-konovalov
+playwright/app/abstractClass.ts @oleksandr-konovalov
+playwright/tsconfig.json @oleksandr-konovalov
+tsconfig.json @oleksandr-konovalov
+playwright/helpers/auth @oleksandr-konovalov
