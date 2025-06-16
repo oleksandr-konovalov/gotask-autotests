@@ -52,7 +52,10 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   workers: process.env.CI ? 1 : undefined,
   reportSlowTests: { max: 5, threshold: 60000 * 3 },
-  reporter: [['html']],
+  reporter: [
+    ['html', { outputFolder: 'playwright-report', open: 'never' }],
+    ['json', { outputFile: 'test-results/report.json' }],
+  ],
   use: {
     launchOptions: {
       args: ['--disable-web-security'],
