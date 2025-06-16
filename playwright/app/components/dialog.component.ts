@@ -5,12 +5,14 @@ import { Component } from '@gt-app/abstractClass.ts';
 
 export class Dialog extends Component {
   protected dialog: Locator;
+  public continueButton: Button;
   private closeButton: Button;
 
   public constructor(page: Page, context: BrowserContext) {
     super(page, context);
     this.dialog = page.locator('nz-modal-container');
     this.closeButton = new Button(page, context, this.dialog.locator('button[nz-modal-close]'));
+    this.continueButton = new Button(page, context, this.dialog.locator('button[nztype="primary"]'));
   }
 
   public async expectLoaded(message: string = 'Expected dialog is visible'): Promise<void> {
@@ -19,6 +21,11 @@ export class Dialog extends Component {
 
   public async close(): Promise<void> {
     await this.closeButton.click();
+    await expect(this.dialog).not.toBeVisible();
+  }
+
+  public async closeLocationWarningDialog(): Promise<void> {
+    await this.continueButton.click();
     await expect(this.dialog).not.toBeVisible();
   }
 }

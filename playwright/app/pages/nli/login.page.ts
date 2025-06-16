@@ -3,6 +3,7 @@ import { Locator, expect, test } from '@playwright/test';
 import { AppPage } from '@gt-app/abstractClass.ts';
 import { Button } from '@gt-app/components/button.component.ts';
 import { Constants } from '@gt-test-data/constants/constants.ts';
+import { Dialog } from '@gt-app/components/dialog.component.ts';
 import { Input } from '@gt-app/components/input.component.ts';
 import { Tab } from '@gt-app/components/tab.component.ts';
 import { TabNames } from '@gt-types/enums/tabs.ts';
@@ -28,6 +29,7 @@ export class Login extends AppPage {
     this.registerBlock.locator('button.ant-btn-auth'),
     true,
   );
+  private locationWarningDialog: Dialog = new Dialog(this.page, this.context);
 
   public async expectLoaded(message: string = 'Expected Login page opened'): Promise<void> {
     await expect(this.registerBlock, message).toBeVisible();
@@ -60,5 +62,22 @@ export class Login extends AppPage {
     await test.step(`🍪Storing access token in ${data.authFilePath}🍪`, async () => {
       await this.page.context().storageState({ path: data.authFilePath });
     });
+  }
+
+  public async open(): Promise<void> {
+    await this.page.goto(this.pagePath);
+    await this.expectLoaded();
+
+    if (process.env.CI) {
+      try {
+        await Promise.race([
+          this.locationWarningDialog.closeLocationWarningDialog(),
+          // eslint-disable-next-line
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout: no dialog in 3s')), 3000)),
+        ]);
+      } catch (e) {
+        console.warn('Could not close location warning dialog (not present):', e.message);
+      }
+    }
   }
 }
