@@ -4,13 +4,13 @@ import { AppPage } from '@gt-app/abstractClass.ts';
 import { Button } from '@gt-app/components/button.component.ts';
 import { Constants } from '@gt-test-data/constants/constants.ts';
 import { Input } from '@gt-app/components/input.component.ts';
-import { LoadingStatesEnum } from '@gt-types/enums/loadingStates.ts';
 import { Tab } from '@gt-app/components/tab.component.ts';
+import { TabNames } from '@gt-types/enums/tabs.ts';
 
 export class SignUp extends AppPage {
   protected pagePath: string = `${process.env.BASE_URL}/auth/register`;
   private registerBlock: Locator = this.page.locator('auth-register-component');
-  private signUpTab: Tab = new Tab(this.page, this.context, 'Sign up');
+  private signUpTab: Tab = new Tab(this.page, this.context, TabNames.SIGN_UP);
   private emailInput: Input = new Input(this.page, this.context, this.registerBlock.locator('input[type="email"]'));
   private passwordInput: Input = new Input(
     this.page,
@@ -26,7 +26,7 @@ export class SignUp extends AppPage {
     this.page,
     this.context,
     this.registerBlock.locator('button.ant-btn-auth'),
-    LoadingStatesEnum.BUTTON_SPINNER,
+    true,
   );
 
   public async expectLoaded(message: string = 'Expected Sign Up page opened'): Promise<void> {

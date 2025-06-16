@@ -3,18 +3,17 @@ import { BrowserContext, Locator, Page, expect } from '@playwright/test';
 import { ActionOptions } from '@gt-types/actionOptions.ts';
 import { Component } from '@gt-app/abstractClass.ts';
 import { Constants } from '@gt-test-data/constants/constants.ts';
+import { LoadingState } from '@gt-app/components/loadingState.component.ts';
 
 export class Button extends Component {
-  private button: Locator;
-  private spinner: Locator;
-  private spinnerSelector: string;
+  public button: Locator;
+  private buttonSpinner: LoadingState;
 
-  public constructor(page: Page, context: BrowserContext, button: Locator, buttonSpinnerSelector?: string) {
+  public constructor(page: Page, context: BrowserContext, button: Locator, hasSpinner?: boolean) {
     super(page, context);
     this.button = button;
-    if (buttonSpinnerSelector) {
-      this.spinnerSelector = buttonSpinnerSelector;
-      this.spinner = this.button.locator(buttonSpinnerSelector);
+    if (hasSpinner) {
+      this.buttonSpinner = new LoadingState(this.page, this.context, this.button);
     }
   }
 
@@ -25,8 +24,9 @@ export class Button extends Component {
   public async click(options: Partial<ActionOptions> & { withLoading?: boolean } = {}): Promise<void> {
     // Set default value for withLoading if it's not provided
     const { withLoading = false } = options;
-    if (withLoading && Boolean(this.spinnerSelector)) {
-      await this._buttonSpinnerCheck(options);
+    if (withLoading && Boolean(this.buttonSpinner)) {
+      await this.button.nth(options.index ?? 0).click();
+      await this.buttonSpinner.expectButtonSpinnerLoaded();
     } else {
       await this.button
         .nth(options.index ?? 0)
@@ -34,12 +34,7 @@ export class Button extends Component {
     }
   }
 
-  private async _buttonSpinnerCheck(options: Partial<ActionOptions>): Promise<void> {
-    const buttonSpinner: Locator = this.spinner;
-    await this.button.nth(options.index ?? 0).click();
-    await expect(buttonSpinner, 'Expect button spinner to be visible').toBeVisible();
-    await expect(buttonSpinner, 'Expect button spinner NOT to be visible').not.toBeVisible({
-      timeout: Constants.SIXTY_SECONDS,
-    });
+  public async expectEnabled(message: string = 'Expected button to be enabled'): Promise<void> {
+    await expect(this.button, message).toBeEnabled();
   }
 }

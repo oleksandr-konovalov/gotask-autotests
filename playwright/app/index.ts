@@ -1,6 +1,7 @@
 import { CreateOrder } from '@gt-pages/customer/createOrder.page.ts';
 import { Landing } from '@gt-pages/nli/landing.page.ts';
 import { Login } from '@gt-pages/nli/login.page.ts';
+import { MyOrders } from '@gt-pages/customer/myOrder.page.ts';
 import { PageHolder } from '@gt-app/abstractClass.ts';
 import { SignUp } from '@gt-pages/nli/signUp.page.ts';
 
@@ -12,4 +13,5 @@ export class NLI extends PageHolder {
 
 export class Customer extends PageHolder {
   public createOrder: CreateOrder = new CreateOrder(this.page, this.context);
+  public myOrders: MyOrders = new MyOrders(this.page, this.context);
 }

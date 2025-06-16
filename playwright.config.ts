@@ -66,6 +66,6 @@ export default defineConfig({
 
   expect: { timeout: Constants.FORTY_SECONDS },
   timeout: Constants.FIVE_MINUTES,
-  /* Configure projects for major browsers */
+  globalTeardown: './playwright/helpers/auth/teardown.ts',
   projects: getProjects(),
 });

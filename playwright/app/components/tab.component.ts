@@ -7,7 +7,7 @@ export class Tab extends Component {
 
   public constructor(page: Page, context: BrowserContext, text?: string) {
     super(page, context);
-    this.tab = text ? this.page.getByRole('tab', { name: text }) : this.page.getByRole('tab');
+    this.tab = text ? page.getByRole('tab', { name: text }) : page.getByRole('tab');
   }
 
   public async expectLoaded(message: string = 'Expected tab is visible'): Promise<void> {
@@ -16,5 +16,11 @@ export class Tab extends Component {
 
   public async expectSelected(): Promise<void> {
     await expect(this.tab, `Expect tab to be selected`).toHaveAttribute('aria-selected', 'true');
+  }
+
+  public async select(): Promise<void> {
+    await this.tab.click();
+    await this.expectSelected();
+    await this.page.waitForTimeout(100);
   }
 }
