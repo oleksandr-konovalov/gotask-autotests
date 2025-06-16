@@ -35,8 +35,9 @@ jobs:
       - name: Install Playwright
         run: npx playwright install --with-deps
 
-      - name: Run Playwright tests
-        run: npx playwright test || true
+      - name: Run Playwright tests via Currents
+        continue-on-error: true
+        run: npx pwc --key ${{ secrets.CURRENTS_API_KEY }} --project-id 3dTN9P
 
       - name: Upload test report
         if: always()
