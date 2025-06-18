@@ -12,7 +12,9 @@ const test = mergeTests(baseFixture);
 let topic: string;
 
 test.describe('ID-1 Check of Creating draft order', { tag: ['@smoke', '@customer', '@createOrder'] }, () => {
-  topic = `KONOVALOV TASK ${faker.string.alphanumeric(10)}`;
+  test.beforeEach(() => {
+    topic = `KONOVALOV TASK ${faker.string.alphanumeric(10)}`;
+  });
 
   test('Check of creating draft Website content order', { tag: ['@smoke'] }, async ({ customer }) => {
     await test.step('Fill order form', async () => {
