@@ -13,11 +13,8 @@
       "@gt-factories/*": ["fixtures/factories/*"],
       "@gt-fixtures/*": ["fixtures/fixtures/*"],
       "@gt-helpers/*": ["helpers/*"],
-      "@gt-services/*": ["services/*"],
       "@gt-models/*": ["models/*"],
-      "@gt-types/*": ["types/*"],
-      "@gt-utils/*": ["utils/*"],
-      "@gt-schemas/*": ["schemas/*"]
+      "@gt-types/*": ["types/*"]
     }
   },
   "include": ["./**/*.ts"],

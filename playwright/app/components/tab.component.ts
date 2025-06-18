@@ -21,6 +21,5 @@ export class Tab extends Component {
   public async select(): Promise<void> {
     await this.tab.click();
     await this.expectSelected();
-    await this.page.waitForTimeout(100);
   }
 }
