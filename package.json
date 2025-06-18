@@ -1,0 +1,49 @@
+{
+  "name": "gotask_autotests",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "pw:ts:build": "npx tsc -p playwright/tsconfig.json",
+    "pre-commit": "npm run pw:ts:build && lint-staged"
+  },
+  "devDependencies": {
+    "@eslint/compat": "1.2.3",
+    "@eslint/eslintrc": "3.2.0",
+    "@eslint/js": "^9.17.0",
+    "@faker-js/faker": "9.3.0",
+    "@playwright/test": "1.49.1",
+    "@stylistic/eslint-plugin-ts": "2.13.0",
+    "@types/luxon": "3.6.2",
+    "@types/node": "22.10.7",
+    "@typescript-eslint/eslint-plugin": "8.17.0",
+    "@typescript-eslint/parser": "8.17.0",
+    "dotenv": "^16.4.7",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-import": "2.31.0",
+    "eslint-plugin-playwright": "2.1.0",
+    "eslint-plugin-unused-imports": "4.1.4",
+    "globals": "^15.14.0",
+    "husky": "^9.1.7",
+    "import-sort-cli": "6.0.0",
+    "import-sort-parser-typescript": "6.0.0",
+    "lint-staged": "^15.4.1",
+    "luxon": "^3.6.1",
+    "playwright": "1.52.0",
+    "prettier": "3.4.2",
+    "tslib": "^2.8.1",
+    "typescript": "5.7.3",
+    "typescript-eslint": "^8.20.0"
+  },
+  "private": true,
+  "lint-staged": {
+    "*.{js,html,md,scss,css,yml,json}": [
+      "prettier --write"
+    ],
+    "*.ts": [
+      "prettier --write",
+      "import-sort --write",
+      "eslint"
+    ]
+  }
+}

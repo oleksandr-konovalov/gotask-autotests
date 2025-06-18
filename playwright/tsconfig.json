@@ -1,0 +1,22 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./",
+    "baseUrl": ".",
+    "noEmit": true,
+    "paths": {
+      "@gt-app/*": ["app/*"],
+      "@gt-pages/*": ["app/pages/*"],
+      "@gt-components/*": ["app/component/*"],
+      "@gt-test-data/*": ["fixtures/*"],
+      "@gt-factories/*": ["fixtures/factories/*"],
+      "@gt-fixtures/*": ["fixtures/fixtures/*"],
+      "@gt-helpers/*": ["helpers/*"],
+      "@gt-models/*": ["models/*"],
+      "@gt-types/*": ["types/*"]
+    }
+  },
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules"]
+}
